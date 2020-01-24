@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  Feature
+
+  Created by Rafael Ferreira on 12/31/19.
+  Copyright © 2019 Swift Yah. All rights reserved.
+*/
+
+"feature.title" = "App Scaffold";

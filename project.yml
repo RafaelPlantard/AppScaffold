@@ -1,0 +1,58 @@
+name: AppScaffold
+
+options: 
+  bundleIdPrefix: io.swift-yah.AppScaffold
+
+targets:
+  App:
+    type: application
+    platform: iOS
+    deploymentTarget: "13.2"
+
+    sources: [Sources/App]
+
+    dependencies:
+      - target: "Core"
+      - target: "Feature"
+
+    postCompileScripts:
+      - script: mint run swiftlint swiftlint --config .swiftlint.yml
+        name: SwiftLint
+
+  Core:
+    type: framework
+    platform: iOS
+
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: "io.swift-yah.AppScaffold.Core"
+
+    sources: [Sources/Core]
+
+    postCompileScripts:
+      - script: mint run swiftlint swiftlint --config .swiftlint.yml
+        name: SwiftLint
+
+  Feature:
+    type: framework
+    platform: iOS
+
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: "io.swift-yah.AppScaffold.Feature"
+
+    sources: [Sources/Feature]
+
+    preBuildScripts:
+      - script: mint run swiftgen swiftgen config run --config "${SRCROOT}/Sources/Feature/Resources/swiftgen.yml"
+        name: SwiftGen
+        inputFiles:
+          - $(SRCROOT)/Sources/Feature/Resources/Base.lproj/Localizable.strings
+        outputFiles:
+          - $(SRCROOT)/Sources/Feature/Resources/Strings.swift
+
+    postCompileScripts:
+      - script: mint run swiftlint swiftlint --config .swiftlint.yml
+        name: SwiftLint
+
+configs:
+  Debug: debug
+  Release: release

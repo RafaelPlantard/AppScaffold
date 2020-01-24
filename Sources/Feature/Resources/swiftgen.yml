@@ -1,0 +1,8 @@
+strings:
+  inputs: Base.lproj/Localizable.strings
+  outputs:
+    templateName: structured-swift4
+    output: Strings.swift
+    params:
+      enumName: Localizable
+  fallback: Base
